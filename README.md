@@ -24,7 +24,7 @@ A production-ready full-stack web application for managing restaurant reservatio
 ![Booking](screenshots/booking.png)
 
 ### 📊 Dashboard
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/userdashboard.png)
 
 
 ---
