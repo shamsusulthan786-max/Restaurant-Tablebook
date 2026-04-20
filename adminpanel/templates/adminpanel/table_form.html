@@ -1,0 +1,13 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Table Form{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ form_title }}</h2>
+  <form method="post" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'adminpanel:table_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

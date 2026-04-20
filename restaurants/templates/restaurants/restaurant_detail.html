@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Restaurant Detail{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8">
+    {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ restaurant.name }}">
+      {% else %}
+        <img src="{% static 'images/sample.jpg' %}" class="img-fluid rounded shadow-sm" alt="{{ restaurant.name }}">
+    {% endif %}
+    <h2>{{ restaurant.name }}</h2>
+    <p>{{ restaurant.address }}, {{ restaurant.city }}</p>
+    <p>{{ restaurant.description }}</p>
+
+   <h4 class="mt-4">Tables</h4>
+<ul class="list-group mb-3">
+  {% for t in restaurant.tables.all %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ t.name }} ({{ t.capacity }} seats)
+      <a href="{% url 'booking_create' restaurant.pk t.pk %}" class="btn btn-sm btn-success">
+        Book
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+    <h4 class="mt-4">Menu</h4>
+    {% for c in restaurant.categories.all %}
+      <h5>{{ c.name }}</h5>
+      <ul class="list-group mb-3">
+        {% for item in c.items.all %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ item.name }}</span>
+            <span>₹{{ item.price }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+
+
+<div class="mb-3">
+  <strong>Average Rating:</strong>
+  <span class="stars">
+    {% with avg=restaurant.average_rating %}
+      {% for i in "12345" %}
+        {% if forloop.counter <= avg|floatformat:0 %}
+          <span class="star">&#9733;</span>
+        {% else %}
+          <span class="star">&#9734;</span>
+        {% endif %}
+      {% endfor %}
+      <span class="text-muted">({{ avg|floatformat:1 }}/5)</span>
+    {% endwith %}
+  </span>
+</div>
+
+<h3 class="mt-4">Reviews</h3>
+{% for review in restaurant.reviews.all %}
+  <div class="card mb-2 p-3">
+    <strong>{{ review.user.username }}</strong>
+    <div class="rating">
+      {% for i in "12345" %}
+        {% if forloop.counter <= review.rating %}
+          <span class="star">&#9733;</span>
+        {% else %}
+          <span class="star">&#9734;</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <p>{{ review.comment }}</p>
+    <small class="text-muted">{{ review.created_at }}</small>
+  </div>
+{% empty %}
+  <p>No reviews yet. Be the first!</p>
+{% endfor %}
+
+<a href="{% url 'restaurants:add_review' restaurant.id %}" class="btn btn-primary mt-3">Add Review</a>
+
+<style>
+  .stars .star, .rating .star {
+    font-size: 1.5rem;
+    color: gold;
+  }
+</style>
+{% endblock %}

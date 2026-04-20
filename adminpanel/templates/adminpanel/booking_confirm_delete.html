@@ -1,0 +1,13 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Delete Booking{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Delete Booking</h2>
+  <p>Are you sure you want to delete booking for <strong>{{ booking.user.username }}</strong> on {{ booking.date }}?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'adminpanel:booking_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

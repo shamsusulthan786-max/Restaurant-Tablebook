@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Edit Booking</h2>
+
+  <div class="card shadow-sm p-4">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="mb-3">
+        {{ form.date.label_tag }}
+        {{ form.date }}
+        <div class="text-danger">{{ form.date.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        {{ form.start_time.label_tag }}
+        {{ form.start_time }}
+        <div class="text-danger">{{ form.start_time.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        {{ form.end_time.label_tag }}
+        {{ form.end_time }}
+        <div class="text-danger">{{ form.end_time.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        {{ form.party_size.label_tag }}
+        {{ form.party_size }}
+        <div class="text-danger">{{ form.party_size.errors }}</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Update Booking</button>
+      <a href="{% url 'bookings_list' %}" class="btn btn-secondary">Back to My Bookings</a>
+    </form>
+  </div>
+
+  <div class="mt-3">
+    <p><strong>Restaurant:</strong> {{ booking.restaurant.name }}</p>
+    <p><strong>Table:</strong> {{ booking.table.name }} (Capacity: {{ booking.table.capacity }})</p>
+    <p><strong>Status:</strong> 
+      {% if booking.status == 'confirmed' %}
+        <span class="badge bg-success">Confirmed</span>
+      {% else %}
+        <span class="badge bg-danger">Cancelled</span>
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endblock %}

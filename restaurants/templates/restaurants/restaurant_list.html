@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Restaurants{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Restaurants</h2>
+<div class="row">
+  {% for r in restaurants %}
+    <div class="col-12 col-sm-6 col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        {% if r.image %}
+          <img src="{{ r.image.url }}" class="card-img-top" alt="{{ r.name }}">
+        {% else %}
+          <img src="{% static 'images/sample.jpg' %}" class="card-img-top" alt="{{ r.name }}">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ r.name }}</h5>
+          <p class="card-text">{{ r.address }}, {{ r.city }}</p>
+          <p class="text-muted small">{{ r.description|truncatewords:15 }}</p>
+          <div class="mt-auto">
+            <a href="{% url 'restaurants:restaurant_detail' r.pk %}" class="btn btn-primary w-100">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-center">No restaurants available yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% load static %}
+{% block content %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: url("{% static 'images/rtbg4.webp' %}") no-repeat center center;
+    background-size: cover;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+  }
+
+ 
+  .welcome-text {
+    color: #fff; 
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.8); 
+  }
+</style>
+
+<div class="row justify-content-center my-5">
+  <div class="col-12 col-md-8">
+    <h2 class="mb-4 text-center welcome-text">Welcome, {{ user.username }}!</h2>
+
+    <!-- Dashboard Card -->
+    <div class="card p-4 shadow-sm">
+      <p class="lead">Here’s what you can do:</p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="{% url 'bookings_list' %}" class="text-decoration-none">View and manage your bookings</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'profile' %}" class="text-decoration-none">Update your profile</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'restaurants:restaurant_list' %}" class="text-decoration-none">Browse restaurants</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

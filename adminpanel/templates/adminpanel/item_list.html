@@ -1,0 +1,33 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Menu Items{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Menu Items</h2>
+  <a href="{% url 'adminpanel:item_create' %}" class="btn btn-primary mb-3">Add Item</a>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.category.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>
+          <a href="{% url 'adminpanel:item_edit' item.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'adminpanel:item_delete' item.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No items found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

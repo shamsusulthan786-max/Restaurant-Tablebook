@@ -1,0 +1,127 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Admin Panel - TableBook{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Custom CSS -->
+  <link href="{% static 'css/admin.css' %}" rel="stylesheet">
+  <style>
+    .nav-link.active {
+      font-weight: bold;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  {% if user.is_authenticated and user.is_staff %}
+    <!-- Authenticated Admin Layout -->
+
+  <div class="d-flex">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-dark text-white p-3">
+      <h4 class="mb-4">Admin Panel</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'home' %}active bg-secondary{% endif %}" href="{% url 'home' %}">
+            <i class="bi bi-house-door me-2"></i> Home
+          </a>
+          <hr>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'admin_dashboard' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:admin_dashboard' %}">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'booking_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:booking_list' %}">
+            <i class="bi bi-calendar-check me-2"></i> Bookings
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white  {% if request.resolver_match.url_name == 'restaurant_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:restaurant_list' %}">
+            <i class="bi bi-shop me-2"></i> Restaurants
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'table_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:table_list' %}">
+            <i class="bi bi-grid-3x3-gap me-2"></i> Tables
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'category_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:category_list' %}">
+            <i class="bi bi-list-ul me-2"></i> Menu Categories
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'item_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:item_list' %}">
+            <i class="bi bi-card-list me-2"></i> Menu Items
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white {% if request.resolver_match.url_name == 'review_list' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:review_list' %}">
+            <i class="bi bi-star me-2"></i> Reviews
+          </a>
+        </li>
+        <hr>
+        <li class="nav-item mt-4">
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'adminpanel:admin_logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-light w-100">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </form>
+          {% else %}
+            <a href="{% url 'adminpanel:admin_login' %}" class="btn btn-outline-light w-100">
+              <i class="bi bi-box-arrow-in-right me-2"></i> Login
+            </a>
+          {% endif %}
+        <li class="nav-item mb-2">
+          {% if user.is_authenticated and user.is_staff %}
+            <a class="nav-link text-white {% if request.resolver_match.url_name == 'create_user' %}active bg-secondary{% endif %}" href="{% url 'adminpanel:create_user' %}">
+              <i class="bi bi-person-plus me-2"></i> Create Admin
+            </a>
+          {% endif %}
+        </li>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 p-4 bg-light">
+      <!-- Toggle button for mobile -->
+      <button class="btn btn-outline-secondary mb-3 d-lg-none" id="sidebarToggle">
+        <i class="bi bi-list"></i> Menu
+      </button>
+{% endif %}
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Sidebar toggle with slide-in effect
+    document.getElementById('sidebarToggle').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

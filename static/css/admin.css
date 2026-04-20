@@ -1,0 +1,104 @@
+/* Sidebar full screen */
+#sidebar {
+  background-color: #212529 !important;
+  min-height: 100vh;        /* Full viewport height */
+  width: 250px;             /* Sidebar width */
+  position: fixed;          /* Fix to the left side */
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out; /* Smooth slide effect */
+  z-index: 1050;            /* Keep above content */
+}
+
+/* Sidebar links */
+#sidebar h4 {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#sidebar .nav-link {
+  color: #adb5bd;
+  transition: all 0.2s ease-in-out;
+}
+
+#sidebar .nav-link:hover {
+  color: #ffffff;
+  background-color: #343a40;
+  border-radius: 4px;
+  padding-left: 10px;
+}
+
+/* Active link highlight */
+#sidebar .nav-link.active {
+  color: #ffffff;
+  background-color: #0d6efd;
+  border-radius: 4px;
+}
+
+/* Logout button */
+#sidebar button {
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Hidden sidebar on mobile */
+@media (max-width: 992px) {
+  #sidebar {
+    transform: translateX(-100%); /* Hide off-screen */
+  }
+  #sidebar.active {
+    transform: translateX(0);     /* Slide in */
+  }
+}
+
+/* Main content area */
+main {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  margin-left: 250px;       /* Prevent overlap on desktop */
+  border-left: 1px solid #dee2e6;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 992px) {
+  main {
+    margin-left: 0;         /* Full width on mobile */
+  }
+}
+
+/* Card styling */
+.card {
+  border-radius: 8px;
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+/* Table styling */
+.table-hover tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+.table th {
+  font-weight: 600;
+}
+
+/* Alerts */
+.alert {
+  margin-bottom: 1rem;
+}
+
+/* Admin Login Page */
+.card h3 {
+  font-weight: 600;
+}
+
+.card .btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.card .btn-primary:hover {
+  background-color: #0b5ed7;
+}

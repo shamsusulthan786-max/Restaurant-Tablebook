@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book a Table{% endblock %}
+{% block content %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const dateInput = document.querySelector('input[name="date"]');
+  const timeInput = document.querySelector('input[name="start_time"]');
+
+  dateInput.addEventListener("change", function() {
+    const today = new Date().toISOString().split("T")[0];
+    const now = new Date();
+    if (dateInput.value === today) {
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      timeInput.min = `${hours}:${minutes}`;
+    } else {
+      timeInput.removeAttribute("min");
+    }
+  });
+});
+</script>
+<div class="container mt-4">
+  <h2 class="mb-3">Book a Table at {{ restaurant.name }}</h2>
+  <p><strong>Table:</strong> {{ table.name }} (Capacity: {{ table.capacity }})</p>
+
+  <form method="post" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <!-- Date field -->
+    <div class="mb-3">
+      {{ form.date.label_tag }}
+      {{ form.date }}
+      <div class="text-danger small">{{ form.date.errors }}</div>
+    </div>
+
+    <!-- Start time field -->
+    <div class="mb-3">
+      {{ form.start_time.label_tag }}
+      {{ form.start_time }}
+      <div class="text-danger small">{{ form.start_time.errors }}</div>
+    </div>
+
+    <!-- End time field -->
+    <div class="mb-3">
+      {{ form.end_time.label_tag }}
+      {{ form.end_time }}
+      <div class="text-danger small">{{ form.end_time.errors }}</div>
+    </div>
+
+    <!-- Party size field -->
+    <div class="mb-3">
+      {{ form.party_size.label_tag }}
+      {{ form.party_size }}
+      <div class="text-danger small">{{ form.party_size.errors }}</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+    <a href="{% url 'bookings_list' %}" class="btn btn-secondary w-100 mt-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

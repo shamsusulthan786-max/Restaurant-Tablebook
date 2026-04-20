@@ -1,0 +1,8 @@
+<h2>Available Tables at {{ restaurant.name }}</h2>
+<ul>
+  {% for table in available_tables %}
+    <li>{{ table.name }} (Capacity: {{ table.capacity }})</li>
+  {% empty %}
+    <li>No tables available for this time slot.</li>
+  {% endfor %}
+</ul>

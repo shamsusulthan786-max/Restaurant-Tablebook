@@ -1,0 +1,31 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Restaurants{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Restaurants</h2>
+  <a href="{% url 'adminpanel:restaurant_create' %}" class="btn btn-primary mb-3">Add Restaurant</a>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for restaurant in restaurants %}
+      <tr>
+        <td>{{ restaurant.name }}</td>
+        <td>{{ restaurant.location }}</td>
+        <td>
+          <a href="{% url 'adminpanel:restaurant_edit' restaurant.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'adminpanel:restaurant_delete' restaurant.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">No restaurants found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

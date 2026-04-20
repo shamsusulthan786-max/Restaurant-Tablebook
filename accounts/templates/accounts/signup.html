@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: url("{% static 'images/rtbg3.jpg' %}") no-repeat center center;
+    background-size: cover;
+  }
+  .auth-card {
+    width: 100%;
+    max-width: 450px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+  }
+</style>
+
+<div class="d-flex justify-content-center align-items-start" style="height: 100vh; padding-bottom: 180px;">
+  <div class="card shadow-lg p-4 auth-card">
+    <h3 class="text-center mb-4 text-success">Create Your Account ✨</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+        {{ form.username }}
+      </div>
+      <div class="text-danger small">{{ form.username.errors }}</div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+        {{ form.email }}
+      </div>
+      <div class="text-danger small">{{ form.email.errors }}</div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+        {{ form.password1 }}
+        <button type="button" class="btn btn-outline-secondary toggle-password" data-target="id_password1">
+          <i class="bi bi-eye"></i>
+        </button>
+      </div>
+      <div class="text-danger small">{{ form.password1.errors }}</div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+        {{ form.password2 }}
+         <button type="button" class="btn btn-outline-secondary toggle-password" data-target="id_password2">
+          <i class="bi bi-eye"></i>
+        </button>
+      </div>
+      <div class="text-danger small">{{ form.password2.errors }}</div>
+
+      <button type="submit" class="btn btn-success w-100">Sign Up</button>
+    </form>
+    <p class="text-center mt-3 text-dark">
+      Already have an account? <a href="{% url 'login' %}" class="text-success">Login</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', function () {
+      const targetId = this.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      const icon = this.querySelector('i');
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+      }
+    });
+  });
+</script>
+
+{% endblock %}

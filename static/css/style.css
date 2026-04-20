@@ -1,0 +1,25 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.btn-primary {
+  background-color: #FF6F61; 
+  border: none;
+}
+
+.btn-success {
+  background-color: #28a745;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.table {
+  font-size: 0.9rem;
+}

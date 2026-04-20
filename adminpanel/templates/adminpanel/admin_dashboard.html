@@ -1,0 +1,52 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Welcome to Admin Dashboard</h2>
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">All Bookings</div>
+    <div class="card-body">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Restaurant</th>
+            <th>Table</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Party</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for booking in bookings %}
+          <tr>
+            <td>{{ booking.user.username }}</td>
+            <td>{{ booking.restaurant.name }}</td>
+            <td>{{ booking.table.name }}</td>
+            <td>{{ booking.date }}</td>
+            <td>{{ booking.start_time }} - {{ booking.end_time }}</td>
+            <td>{{ booking.party_size }}</td>
+            <td>
+              {% if booking.status == 'confirmed' %}
+                <span class="badge bg-success">Confirmed</span>
+              {% else %}
+                <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if booking.status == 'confirmed' %}
+                <a href="{% url 'adminpanel:admin_cancel_booking' booking.id %}" class="btn btn-sm btn-outline-danger">Cancel</a>
+                {% else %}
+                <a href="{% url 'adminpanel:admin_confirm_booking' booking.id %}" class="btn btn-sm btn-outline-success">Confirm</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

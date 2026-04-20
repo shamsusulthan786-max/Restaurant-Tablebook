@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; 
+    background: url("{% static 'images/rtbg4.webp' %}") no-repeat center center;
+    background-size: cover; 
+  }
+
+  .home-card {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+  }
+</style>
+
+<div class="d-flex justify-content-center align-items-start" style="height: 100vh; padding-top: 200px;">
+  <div class="card shadow-lg p-5 home-card text-center">
+    <h1 class="mb-4 text-primary">Welcome to Our Restaurants 🍽️</h1>
+    <p class="lead text-dark">
+      Book tables, explore menus, and enjoy a modern dining experience.
+    </p>
+    <a href="{% url 'restaurants:restaurant_list' %}" class="btn btn-success mt-3">Explore Restaurants</a>
+  </div>
+</div>
+{% endblock %}

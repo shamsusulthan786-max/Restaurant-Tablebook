@@ -1,0 +1,36 @@
+{% extends "adminpanel/admin_base.html" %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Bookings</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Table</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.user.username }}</td>
+        <td>{{ booking.table.name }}</td>
+        <td>{{ booking.date }}</td>
+        <td>{{ booking.time }}</td>
+        <td>{{ booking.status }}</td>
+        <td>
+          <a href="{% url 'adminpanel:booking_edit' booking.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'adminpanel:booking_delete' booking.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">No bookings found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
