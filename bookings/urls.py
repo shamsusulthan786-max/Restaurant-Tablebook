@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     bookings_list,booking_create, cancel_booking, edit_booking, available_tables, dashboard_bookings,
 )
+from .api_views import BookingListAPIView, BookingCreateAPIView, BookingCancelAPIView
 
 urlpatterns = [
     # List all bookings for the logged-in user
@@ -21,4 +22,10 @@ urlpatterns = [
 
     # Dashboard view: upcoming + past bookings
     path('dashboard/', dashboard_bookings, name='dashboard_bookings'),
+
+
+    # API endpoints
+    path('api/', BookingListAPIView.as_view(), name='api_booking_list'),
+    path('api/create/', BookingCreateAPIView.as_view(), name='api_booking_create'),
+    path('api/cancel/<int:pk>/', BookingCancelAPIView.as_view(), name='api_booking_cancel'),
 ]

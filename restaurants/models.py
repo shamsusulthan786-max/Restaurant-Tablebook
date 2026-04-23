@@ -21,8 +21,11 @@ class Restaurant(models.Model):
         return 0
 
     def clean(self):
-        if self.closing_time <= self.opening_time:
-            raise ValidationError("Closing time must be after opening time.")
+        if self.opening_time and self.closing_time:
+            # Allow midnight (00:00) as a valid closing time
+            from datetime import time
+            if self.closing_time != time(0, 0) and self.closing_time <= self.opening_time:
+                raise ValidationError("Closing time must be after opening time.")
 
 
 class Table(models.Model):
