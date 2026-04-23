@@ -24,6 +24,14 @@ def booking_create(request, restaurant_id, table_id):
             try:
                 booking.full_clean()
                 booking.save()
+                # Trigger async email confirmation via Celery
+                send_booking_confirmation_email.delay(
+                    user_email=request.user.email,
+                    restaurant_name=restaurant.name,
+                    date=str(booking.date),
+                    start_time=str(booking.start_time),
+                    end_time=str(booking.end_time),
+                )
                 messages.success(request, "Booking confirmed! A confirmation email has been sent.")
                 return redirect('bookings_list')
             except ValidationError as e:
