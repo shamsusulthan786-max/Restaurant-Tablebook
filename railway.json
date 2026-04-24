@@ -2,7 +2,7 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "python manage.py collectstatic --noinput"
+    "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate"
   },
   "deploy": {
     "startCommand": "gunicorn restaurant_booking.wsgi --log-file -",
