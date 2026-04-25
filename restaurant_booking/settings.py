@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cloudinary',
-    'cloudinary_storage',
     'rest_framework',
     'restaurants',
     'bookings',
@@ -189,6 +188,7 @@ LOGGING = {
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from cloudinary.storage import MediaCloudinaryStorage
 
 cloudinary.config(
     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
@@ -202,4 +202,4 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary.storage.MediaCloudinaryStorage'
