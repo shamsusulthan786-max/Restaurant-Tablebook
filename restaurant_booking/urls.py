@@ -19,39 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from django.http import JsonResponse
-import cloudinary.uploader
-import os
-
-def debug_cloudinary(request):
-    return JsonResponse({
-        'cloud_name': os.environ.get('CLOUDINARY_CLOUD_NAME', 'NOT SET'),
-        'api_key': os.environ.get('CLOUDINARY_API_KEY', 'NOT SET'),
-        'api_secret_set': 'YES' if os.environ.get('CLOUDINARY_API_SECRET') else 'NOT SET',
-    })
-
-def debug_cloudinary_upload(request):
-    try:
-        result = cloudinary.uploader.upload(
-            "https://res.cloudinary.com/demo/image/upload/sample.jpg",
-            folder="test"
-        )
-        return JsonResponse({'status': 'success', 'url': result['secure_url']})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
-    
-def debug_storage(request):
-    from django.conf import settings
-    return JsonResponse({
-        'default_storage': settings.DEFAULT_FILE_STORAGE,
-        'cloudinary_storage': settings.CLOUDINARY_STORAGE,
-    })
 
 
 urlpatterns = [
-    path('debug-cloud/', debug_cloudinary),
-    path('debug-upload/', debug_cloudinary_upload),
-    path('debug-storage/', debug_storage),
+
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('accounts/', include('accounts.urls')),
