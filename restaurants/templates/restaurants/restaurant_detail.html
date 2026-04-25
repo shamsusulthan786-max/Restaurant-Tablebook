@@ -7,7 +7,7 @@
     {% if restaurant.image %}
         <img src="{{ restaurant.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ restaurant.name }}">
       {% else %}
-        <img src="{% static 'images/sample.jpg' %}" class="img-fluid rounded shadow-sm" alt="{{ restaurant.name }}">
+        <img src="{% static 'images/no-image.jpg' %}" class="img-fluid rounded shadow-sm" alt="{{ restaurant.name }}">
     {% endif %}
     <h2>{{ restaurant.name }}</h2>
     <p>{{ restaurant.address }}, {{ restaurant.city }}</p>
