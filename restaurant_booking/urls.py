@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.http import JsonResponse
+import cloudinary.uploader
 import os
 
 def debug_cloudinary(request):
@@ -29,9 +30,20 @@ def debug_cloudinary(request):
         'api_secret_set': 'YES' if os.environ.get('CLOUDINARY_API_SECRET') else 'NOT SET',
     })
 
+def debug_cloudinary_upload(request):
+    try:
+        result = cloudinary.uploader.upload(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Biryani_Home_Cooked.jpg/800px-Biryani_Home_Cooked.jpg",
+            folder="test"
+        )
+        return JsonResponse({'status': 'success', 'url': result['secure_url']})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
+
 
 urlpatterns = [
     path('debug-cloud/', debug_cloudinary),
+    path('debug-upload/', debug_cloudinary_upload),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('accounts/', include('accounts.urls')),
