@@ -19,8 +19,19 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.http import JsonResponse
+import os
+
+def debug_cloudinary(request):
+    return JsonResponse({
+        'cloud_name': os.environ.get('CLOUDINARY_CLOUD_NAME', 'NOT SET'),
+        'api_key': os.environ.get('CLOUDINARY_API_KEY', 'NOT SET'),
+        'api_secret_set': 'YES' if os.environ.get('CLOUDINARY_API_SECRET') else 'NOT SET',
+    })
+
 
 urlpatterns = [
+    path('debug-cloud/', debug_cloudinary),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('accounts/', include('accounts.urls')),
