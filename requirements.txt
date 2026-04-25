@@ -11,7 +11,6 @@ click-repl==0.3.0
 cloudinary==1.44.2
 colorama==0.4.6
 cron_descriptor==2.0.6
-dj-database-url==3.1.2
 Django==5.2.5
 django-celery==3.1.17
 django-celery-beat==2.8.1
