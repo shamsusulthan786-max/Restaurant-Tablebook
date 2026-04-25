@@ -188,7 +188,7 @@ LOGGING = {
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from cloudinary.storage import MediaCloudinaryStorage
+
 
 cloudinary.config(
     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
