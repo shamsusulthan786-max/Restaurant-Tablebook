@@ -33,7 +33,7 @@ def debug_cloudinary(request):
 def debug_cloudinary_upload(request):
     try:
         result = cloudinary.uploader.upload(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Biryani_Home_Cooked.jpg/800px-Biryani_Home_Cooked.jpg",
+            "https://res.cloudinary.com/demo/image/upload/sample.jpg",
             folder="test"
         )
         return JsonResponse({'status': 'success', 'url': result['secure_url']})
