@@ -40,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
     'cloudinary',
+    'cloudinary_storage',
     'rest_framework',
     'restaurants',
     'bookings',
-    'accounts','adminpanel'
-
+    'accounts',
+    'adminpanel',
 ]
 
 MIDDLEWARE = [
