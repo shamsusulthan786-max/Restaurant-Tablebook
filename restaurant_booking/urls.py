@@ -39,11 +39,19 @@ def debug_cloudinary_upload(request):
         return JsonResponse({'status': 'success', 'url': result['secure_url']})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+    
+def debug_storage(request):
+    from django.conf import settings
+    return JsonResponse({
+        'default_storage': settings.DEFAULT_FILE_STORAGE,
+        'cloudinary_storage': settings.CLOUDINARY_STORAGE,
+    })
 
 
 urlpatterns = [
     path('debug-cloud/', debug_cloudinary),
     path('debug-upload/', debug_cloudinary_upload),
+    path('debug-storage/', debug_storage),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('accounts/', include('accounts.urls')),
