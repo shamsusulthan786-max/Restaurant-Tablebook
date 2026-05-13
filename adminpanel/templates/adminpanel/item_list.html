@@ -18,7 +18,7 @@
       <tr>
         <td>{{ item.name }}</td>
         <td>{{ item.category.name }}</td>
-        <td>AED{{ item.price }}</td>
+        <td>AED {{ item.price }}</td>
         <td>
           <a href="{% url 'adminpanel:item_edit' item.id %}" class="btn btn-sm btn-warning">Edit</a>
           <a href="{% url 'adminpanel:item_delete' item.id %}" class="btn btn-sm btn-danger">Delete</a>
